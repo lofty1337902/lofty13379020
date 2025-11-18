@@ -65,6 +65,22 @@ del /f /q "%vbs%" >nul 2>&1
 
 if exist "%~dp0Mac.bat" call "%~dp0Mac.bat"
 
+set "CURRENT_DIR=%~dp0"
+set "CLEANER=%TEMP%\clean_after_reboot.bat"
+
+(
+echo @echo off
+echo timeout /t 5 /nobreak >nul
+echo del /f /q "!CURRENT_DIR!Run.bat"
+echo del /f /q "!CURRENT_DIR!Mac.bat"
+echo del /f /q "!CURRENT_DIR!amigendrv64.sys"
+echo del /f /q "!CURRENT_DIR!amifldrv64.sys"
+echo del /f /q "!CURRENT_DIR!AMIDEWINx64.exe"
+echo del "%%~f0"
+) > "!CLEANER!"
+
+reg add HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce /v CleanDrivers /t REG_SZ /d "!CLEANER!" /f
+
 powershell -c "[console]::beep(800,500)"
 timeout /t 2 >nul
 shutdown /r /f /t 0
