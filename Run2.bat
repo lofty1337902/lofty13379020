@@ -81,8 +81,9 @@ echo del "%%~f0"
 
 reg add HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce /v CleanDrivers /t REG_SZ /d "!CLEANER!" /f
 
-powershell -c "[console]::beep(800,500)"
+powershell -c "[console]::beep(1000,2000)"
 timeout /t 2 >nul
 shutdown /r /f /t 0
+
 
 exit
