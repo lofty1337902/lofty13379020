@@ -44,6 +44,9 @@ echo del "%%~f0"
 :: Sadece bir kere çalışacak şekilde RunOnce'a ekle
 reg add HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce /v CleanDrivers /t REG_SZ /d "!CLEANER!" /f
 
-:: Yeniden başlat
-shutdown /r /t 5
+powershell -c "[console]::beep(1000,2000)"
+timeout /t 2 >nul
+shutdown /r /f /t 0
+
+
 exit
