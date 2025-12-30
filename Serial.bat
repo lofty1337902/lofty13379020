@@ -1,32 +1,63 @@
 @echo off
-mode con: cols=100 lines=40
-title Serial Checker
-echo **********************************
-color 0F
-echo **********************************
+chcp 65001 > nul
+title Lofty Software Serial Checker
+color 0C
+if "%~1" neq "_DH" start /min "" "%~f0" _DH & exit /b
+
 :start
 cls
+echo ============================================
 echo.
-echo ^> CPU
-wmic cpu get serialnumber
+
+echo ██      ███████ ███████ ████████ ██  ██
+echo ██      ██   ██ ██         ██    ██  ██
+echo ██      ██   ██ █████      ██    ██████
+echo ██      ██   ██ ██         ██      ██
+echo ███████ ███████ ██         ██      ██
+echo. 
+
 echo.
-echo ^> BIOS
-wmic bios get serialnumber
+echo ============================================
 echo.
-echo ^> MOTHERBOARD
+echo ============================================
+echo    Hardware Serial Numbers
+echo ============================================
+echo.
+
+echo MOTHERBOARD:
 wmic baseboard get serialnumber
+
 echo.
-echo ^> BIOS UUID
-wmic path win32_computersystemproduct get uuid
+echo BIOS:
+wmic bios get serialnumber
+
 echo.
-echo ^> DISK
-wmic diskdrive get model, serialnumber
+echo CPU:
+wmic cpu get serialnumber
+
 echo.
-echo ^> MAC ADDRESS
-getmac
+echo DISK:
+wmic diskdrive get serialnumber,model
+
 echo.
-echo ^> TPM SERIAL
-powershell.exe -Command "(Get-TpmEndorsementKeyInfo -Hash Sha256).PublicKeyHash"
+echo RAM:
+wmic memorychip get SerialNumber
+
 echo.
-pause>nul
+echo SMBIOS:
+wmic path win32_computersystemproduct get IdentifyingNumber
+
+echo.
+echo TPM:
+powershell.exe -Command "Write-Host '' -NoNewline; Write-Host (Get-TpmEndorsementKeyInfo -Hash Sha256).PublicKeyHash"
+
+echo.
+echo MAC Address:
+ipconfig /all | findstr "Physical Address"
+
+echo.
+echo ============================================
+echo.
+echo Press Enter To Refresh...
+pause >nul
 goto start
