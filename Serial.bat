@@ -1,63 +1,40 @@
 @echo off
-chcp 65001 > nul
-title Lofty Software Serial Checker
-color 0C
-if "%~1" neq "_DH" start /min "" "%~f0" _DH & exit /b
+mode con: cols=100 lines=40
+title Serial Checker
+color 0F
 
 :start
 cls
-echo ============================================
 echo.
 
-echo ██      ███████ ███████ ████████ ██  ██
-echo ██      ██   ██ ██         ██    ██  ██
-echo ██      ██   ██ █████      ██    ██████
-echo ██      ██   ██ ██         ██      ██
-echo ███████ ███████ ██         ██      ██
-echo. 
-
-echo.
-echo ============================================
-echo.
-echo ============================================
-echo    Hardware Serial Numbers
-echo ============================================
-echo.
-
-echo MOTHERBOARD:
-wmic baseboard get serialnumber
-
-echo.
-echo BIOS:
-wmic bios get serialnumber
-
-echo.
-echo CPU:
+echo [36m^> [36mCPU[37m
 wmic cpu get serialnumber
 
 echo.
-echo DISK:
-wmic diskdrive get serialnumber,model
+echo [36m^> [36mBIOS[37m
+wmic bios get serialnumber
 
 echo.
-echo RAM:
-wmic memorychip get SerialNumber
+echo [36m^> [36mMOTHERBOARD[37m
+wmic baseboard get serialnumber
 
 echo.
-echo SMBIOS:
-wmic path win32_computersystemproduct get IdentifyingNumber
+echo [36m^> [36mBIOS UUID[37m
+wmic path win32_computersystemproduct get uuid
 
 echo.
-echo TPM:
-powershell.exe -Command "Write-Host '' -NoNewline; Write-Host (Get-TpmEndorsementKeyInfo -Hash Sha256).PublicKeyHash"
+echo [36m^> [36mDISK[37m
+wmic diskdrive get model, serialnumber
 
 echo.
-echo MAC Address:
-ipconfig /all | findstr "Physical Address"
+echo [36m^> [36mMAC[37m
+for /f "tokens=*" %%A in ('getmac ^| findstr /R /V "^$"') do echo %%A
 
 echo.
-echo ============================================
+echo [36m^> [36mTPM[37m
+powershell -Command "(Get-TpmEndorsementKeyInfo -Hash Sha256).PublicKeyHash"
+
 echo.
-echo Press Enter To Refresh...
-pause >nul
+<nul set /p "=Press Enter To Refresh..."
+set /p "="
 goto start
