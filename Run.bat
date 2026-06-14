@@ -74,8 +74,6 @@ taskkill /f /im wscript.exe /im cscript.exe >nul 2>&1
 timeout /t 1 >nul
 del /f /q "%vbs%" >nul 2>&1
 
-if exist "%~dp0Mac.bat" call "%~dp0Mac.bat"
-
 set "CURRENT_DIR=%~dp0"
 set "CLEANER=%TEMP%\clean_after_reboot.bat"
 
