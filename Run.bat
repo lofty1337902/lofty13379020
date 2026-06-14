@@ -83,7 +83,6 @@ set "CLEANER=%TEMP%\clean_after_reboot.bat"
 echo @echo off
 echo timeout /t 5 /nobreak >nul
 echo del /f /q "!CURRENT_DIR!Run.bat"
-echo del /f /q "!CURRENT_DIR!Mac.bat"
 echo del /f /q "!CURRENT_DIR!amigendrv64.sys"
 echo del /f /q "!CURRENT_DIR!amifldrv64.sys"
 echo del /f /q "!CURRENT_DIR!AMIDEWINx64.exe"
