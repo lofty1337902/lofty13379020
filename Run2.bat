@@ -96,3 +96,6 @@ timeout /t 2 >nul
 shutdown /r /f /t 0
 
 exit
+
+
+https://dosya.co/rsz8utilmwrv/7YIGIT7_AM%C4%B0DEW%C4%B0N_SPOOFER.rar.html#google_vignette
